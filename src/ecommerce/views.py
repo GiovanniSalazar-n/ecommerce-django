@@ -92,7 +92,7 @@ class CheckoutView(View):
             messages.error(request, "Tu carrito está vacío.")
             return redirect("ventas:ventas-home")
 
-        # Aquí normalmente crearías Order/OrderItem en BD
+        
         request.session["cart"] = {}
         request.session.modified = True
         messages.success(request, "Pedido procesado correctamente ")
