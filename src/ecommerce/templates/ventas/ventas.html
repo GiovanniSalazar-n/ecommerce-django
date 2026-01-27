@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Ventas</h1>
+
+<h2>Productos</h2>
+<ul>
+  {% for p in products %}
+    <li>
+      <strong>{{ p.title }}</strong> - ${{ p.price }}
+      <form method="post" action="{% url 'ventas:add-to-cart' p.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Agregar</button>
+      </form>
+    </li>
+  {% empty %}
+    <li>No hay productos.</li>
+  {% endfor %}
+</ul>
+
+<hr>
+
+<h2>Carrito</h2>
+
+{% if cart_items %}
+  <ul>
+    {% for item in cart_items %}
+      <li>
+        {{ item.product.title }} — Cantidad: {{ item.qty }} — Subtotal: ${{ item.subtotal }}
+        <form method="post" action="{% url 'ventas:remove-from-cart' item.product.id %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit">Quitar 1</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p><strong>Total:</strong> ${{ cart_total }}</p>
+
+  <form method="post" action="{% url 'ventas:checkout' %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit">Procesar pedido</button>
+  </form>
+
+  <form method="post" action="{% url 'ventas:clear-cart' %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit">Vaciar carrito</button>
+  </form>
+
+{% else %}
+  <p>Tu carrito está vacío.</p>
+{% endif %}
+{% endblock %}
