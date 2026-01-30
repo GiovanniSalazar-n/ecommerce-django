@@ -35,6 +35,11 @@ ALLOWED_HOSTS = list(map(str.strip, allowed_hosts.split(",")))
 # Application definitions
 INSTALLED_APPS = [
     "pages.apps.PagesConfig",
+    "product.apps.ProductConfig",
+    "billing_profile.apps.BillingProfileConfig",
+    "address.apps.AddressConfig",
+    "cart.apps.CartConfig",
+    "order_manager.apps.OrderManagerConfig",
     "ecommerce.apps.EcommerceConfig",
     "django.contrib.admin",
     "django.contrib.auth",
