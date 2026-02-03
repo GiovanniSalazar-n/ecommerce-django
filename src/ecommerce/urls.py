@@ -5,9 +5,10 @@ from .views import (
     RemoveFromCartView,
     ClearCartView,
     CheckoutView,
+    VentasAjaxView
 )
 
-app_name = "ventas"
+app_name = "ecommerce"
 
 urlpatterns = [
     path("", VentasHomeView.as_view(), name="ventas-home"),
@@ -15,4 +16,5 @@ urlpatterns = [
     path("cart/remove/<int:product_id>/", RemoveFromCartView.as_view(), name="remove-from-cart"),
     path("cart/clear/", ClearCartView.as_view(), name="clear-cart"),
     path("checkout/", CheckoutView.as_view(), name="checkout"),
+    path("sales/data/", VentasAjaxView.as_view(), name="sales-data"),
 ]

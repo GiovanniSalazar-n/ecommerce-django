@@ -5,9 +5,25 @@ from django.http import HttpResponseNotAllowed
 
 from .models import Product  
 
+from django.http import JsonResponse
+from django.views import View
+from order_manager.models import Order
+
+class VentasAjaxView(View):
+    def get(self, request, *args, **kwargs):
+        qs = Order.objects.order_by("-created_at")[:10]
+
+        labels = []
+        data = []
+
+        for order in qs:
+            labels.append(f"Orden #{order.id}")
+            data.append(float(order.total)) 
+
+        return JsonResponse({"labels": labels, "data": data})
 
 class VentasHomeView(View):
-    template_name = "ventas/ventas.html"
+    template_name = "ecommerce/ventas.html"
 
     def get_cart_context(self, request):
         cart = request.session.get("cart", {}) 

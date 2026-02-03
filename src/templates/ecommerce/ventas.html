@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Ventas</h1>
+
+<canvas id="salesChart" width="400" height="200"></canvas>
+{% endblock %}
+
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+$(document).ready(function(){
+
+    function renderChart(labels, data){
+        const ctx = document.getElementById("salesChart");
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Cantidad vendida',
+                    data: data,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    }
+
+    $.ajax({
+        url: "{% url 'ecommerce:sales-data' %}",
+        method: "GET",
+        success: function(response){
+            renderChart(response.labels, response.data);
+        },
+        error: function(){
+            alert("Error al cargar datos");
+        }
+    });
+
+});
+</script>
+{% endblock %}
