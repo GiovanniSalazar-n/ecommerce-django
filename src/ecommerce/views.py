@@ -8,7 +8,31 @@ from .models import Product
 from django.http import JsonResponse
 from django.views import View
 from order_manager.models import Order
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
+from .forms import UserRegisterForm
+
+
+def register(request):
+    initial_data = {
+        "username": "usuario_demo",
+        "email": "correo@demo.com",
+    }
+
+    form = UserRegisterForm(
+        request.POST or None,
+        initial=initial_data
+    )
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Usuario creado correctamente")
+        return redirect("ecommerce:home") 
+
+    return render(request, "ecommerce/register.html", {
+        "form": form
+    })
 class VentasAjaxView(View):
     def get(self, request, *args, **kwargs):
         qs = Order.objects.order_by("-created_at")[:10]
