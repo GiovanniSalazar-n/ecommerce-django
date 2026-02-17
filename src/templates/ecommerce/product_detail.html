@@ -1,0 +1,25 @@
+{% extends "layouts/base_site.html" %}
+
+{% block title %}{{ product.name }} | eCommerce{% endblock %}
+
+{% block page_content %}
+
+  {% include "ecommerce/partials/section_title.html" with title="Detalle del producto" subtitle="Vista individual del producto" %}
+  {% include "ecommerce/partials/product_meta.html" with product=product %}
+
+  <hr class="divider">
+
+  {% include "ecommerce/partials/section_title.html" with title="Lista demo " subtitle="Cada múltiplo se marca en negrita" %}
+
+  <ul>
+    {% for item in extras %}
+      <li class="{% if forloop.counter|divisibleby:divisible_num %}bold{% endif %}">
+        {{ forloop.counter }}. {{ item }}
+        {% if forloop.counter|divisibleby:divisible_num %}
+          <span class="pill">múltiplo de {{ divisible_num }}</span>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+<div class="card-box">
+  <p><span class="bold">Nombre:</span> {{ product.name }}</p>
+  <p><span class="bold">Precio:</span> ${{ product.price }}</p>
+
+  {% if product.description %}
+    <p><span class="bold">Descripción:</span> {{ product.description }}</p>
+  {% else %}
+    <p class="muted">Sin descripción.</p>
+  {% endif %}
+</div>
