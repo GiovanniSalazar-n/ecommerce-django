@@ -9,14 +9,14 @@
 
   <hr class="divider">
 
-  {% include "ecommerce/partials/section_title.html" with title="Lista demo " subtitle="Cada múltiplo se marca en negrita" %}
+  {% include "ecommerce/partials/section_title.html" with title="Lista demo " subtitle="Cada múltiplo de dos se marca en negrita" %}
 
   <ul>
     {% for item in extras %}
       <li class="{% if forloop.counter|divisibleby:divisible_num %}bold{% endif %}">
         {{ forloop.counter }}. {{ item }}
         {% if forloop.counter|divisibleby:divisible_num %}
-          <span class="pill">múltiplo de {{ divisible_num }}</span>
+         
         {% endif %}
       </li>
     {% endfor %}
