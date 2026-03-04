@@ -8,6 +8,8 @@ from rest_framework.renderers import JSONRenderer
 from .models import Product
 from .serializers import ProductSerializer
 
+from rest_framework.pagination import PageNumberPagination
+from .pagination import ProductPageNumberPagination
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
@@ -28,16 +30,22 @@ class ProductViewSet(ViewSet):
 
     def list(self, request):
         print(">>> list (GET)")
-        qs = Product.objects.all().order_by("-id")
+
+        queryset = Product.objects.all().order_by("-id")
+
+        paginator = ProductPageNumberPagination()
+        page = paginator.paginate_queryset(queryset, request)
+
         results = []
-        for p in qs:
+        for p in page:
             results.append({
                 "id": p.id,
                 "name": p.name,
                 "description": p.description,
                 "price": str(p.price),
             })
-        return Response({"message": "Listado", "results": results})
+
+        return paginator.get_paginated_response(results)
 
     def create(self, request):
         print(">>> create (POST)")
