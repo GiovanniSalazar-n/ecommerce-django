@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework_simplejwt",
+    
 ]
 
 MIDDLEWARE = [
@@ -174,3 +176,8 @@ if DEBUG:
         "127.0.0.1",
         "10.0.2.2",
     ]
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}
